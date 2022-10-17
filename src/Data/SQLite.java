@@ -1,15 +1,15 @@
-package Datos;
+package Data;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLite implements ComunicacionDB{
+public class SQLite implements DBComunication {
     protected Connection conexion = null;
     protected  Statement consulta = null;
     protected ResultSet resultado = null;
 
-    private void conectar(){
+    private void connect(){
         try{
             conexion = DriverManager.getConnection("jdbc:sqlite:DatosUsuarios.db");
             System.out.println("Conectado.");
@@ -20,34 +20,34 @@ public class SQLite implements ComunicacionDB{
     }
 
     @Override
-    public void desconectar() throws SQLException{
+    public void disconnect() throws SQLException{
         conexion.close();
         System.out.println("Desconectado.");
     }
 
     @Override
-    public void consultaUID(String sql) throws SQLException {
-        conectar();
+    public void queryUID(String sql) throws SQLException {
+        connect();
 
         consulta = conexion.createStatement();
         consulta.execute(sql);
 
-        desconectar();
+        disconnect();
     }
 
     @Override
-    public ResultSet obtenerDatos(String sql) throws SQLException {
-        conectar();
+    public ResultSet getData(String sql) throws SQLException {
+        connect();
         consulta = conexion.createStatement();
         resultado = consulta.executeQuery(sql);
         return resultado;
     }
 
     @Override
-    public List<Object> obtenerRegistros(String sql) throws SQLException {
+    public List<Object> getRecords(String sql) throws SQLException {
         List<Object> registros = new ArrayList<>();
 
-        conectar();
+        connect();
         consulta = conexion.createStatement();
         resultado = consulta.executeQuery(sql);
         if(resultado.next()){
@@ -55,7 +55,7 @@ public class SQLite implements ComunicacionDB{
                 registros.add(resultado.getObject(i));
             }
         }
-        desconectar();
+        disconnect();
         return registros;
     }
 }

@@ -1,10 +1,10 @@
 package Main;
 
-import Interface.Formulario;
+import Interface.Form;
 
 public class Main {
     public static void main(String[] args) {
-        Formulario frm = new Formulario();
+        Form frm = new Form();
         frm.setVisible(true);
     }
 }
