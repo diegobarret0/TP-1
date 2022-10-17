@@ -1,6 +1,6 @@
 package Interface;
 
-import Servicios.ServiciosInterface;
+import Services.InterfaceServices;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -12,12 +12,12 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClienteAdmInternalFrame extends javax.swing.JInternalFrame {
+public class ClientAdmInternalFrame extends javax.swing.JInternalFrame {
     private int idCliente;
 
     ButtonGroup grupoBotonesGenero;
 
-    public ClienteAdmInternalFrame() {
+    public ClientAdmInternalFrame() {
         initComponents();
         cargarTabla();
     }
@@ -260,7 +260,7 @@ public class ClienteAdmInternalFrame extends javax.swing.JInternalFrame {
 
     //*************************************Eventos************************************************//
     private void buttonGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {
-        ServiciosInterface serviciosInterface = new ServiciosInterface();
+        InterfaceServices interfaceServices = new InterfaceServices();
         HashMap<String, String> nuevoCliente = new HashMap<>();
 
         nuevoCliente.put("Nombre Usuario", txtNombreUsuarioCliente.getText());
@@ -276,17 +276,17 @@ public class ClienteAdmInternalFrame extends javax.swing.JInternalFrame {
         nuevoCliente.put("Admin", getAdmin());
 
         try {
-            String validacionCliente = serviciosInterface.validarNuevoCliente(nuevoCliente);
+            String validacionCliente = interfaceServices.newClientValidation(nuevoCliente);
 
             if(validacionCliente != null)
                 JOptionPane.showMessageDialog(null, validacionCliente);
             else {
-                JOptionPane.showMessageDialog(null, serviciosInterface.saveCliente(nuevoCliente));
+                JOptionPane.showMessageDialog(null, interfaceServices.saveClient(nuevoCliente));
                 cargarTabla();
             }
         }
         catch (SQLException e) {
-            Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -312,14 +312,14 @@ public class ClienteAdmInternalFrame extends javax.swing.JInternalFrame {
     }
 
     private void buttonDeleteClienteActionPerformed(java.awt.event.ActionEvent evt) {
-        ServiciosInterface serviciosInterface = new ServiciosInterface();
-        String deleteCliente = serviciosInterface.deleteCliente(idCliente);
+        InterfaceServices interfaceServices = new InterfaceServices();
+        String deleteCliente = interfaceServices.deleteClient(idCliente);
         JOptionPane.showMessageDialog(null, deleteCliente);
         cargarTabla();
     }
 
     private void buttonUpdateCleinteActionPerformed(java.awt.event.ActionEvent evt) {
-        ServiciosInterface serviciosInterface = new ServiciosInterface();
+        InterfaceServices interfaceServices = new InterfaceServices();
         HashMap<String, String> cliente = new HashMap<>();
 
         cliente.put("Nombre Usuario", txtNombreUsuarioCliente.getText());
@@ -334,17 +334,17 @@ public class ClienteAdmInternalFrame extends javax.swing.JInternalFrame {
         cliente.put("Cant. de hijos", getCantidadHijos());
         cliente.put("Admin", getAdmin());
 
-        JOptionPane.showMessageDialog(null, serviciosInterface.updateCliente(idCliente, cliente));
+        JOptionPane.showMessageDialog(null, interfaceServices.updateClient(idCliente, cliente));
         cargarTabla();
     }
 
     //******************************Metodos soporte para evetos***********************************//
     private void cargarTabla(){
-        ServiciosInterface srvDB = new ServiciosInterface();
+        InterfaceServices srvDB = new InterfaceServices();
         try {
-            tablaClientes.setModel(srvDB.getGrilla());
+            tablaClientes.setModel(srvDB.getGrid());
         } catch (SQLException e) {
-            Logger.getLogger(ClienteAdmInternalFrame.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ClientAdmInternalFrame.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

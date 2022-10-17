@@ -5,9 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 
-public class Formulario extends javax.swing.JFrame {
+public class Form extends javax.swing.JFrame {
 
-    public Formulario() {
+    public Form() {
         initComponents();
     }
 
@@ -18,6 +18,7 @@ public class Formulario extends javax.swing.JFrame {
         mainMenu = new javax.swing.JMenuBar();
         clientesMenu = new javax.swing.JMenu();
         clienteAdm = new javax.swing.JMenuItem();
+        permisosCliente = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -43,6 +44,14 @@ public class Formulario extends javax.swing.JFrame {
         });
         clientesMenu.add(clienteAdm);
 
+        permisosCliente.setText("Permisos Cliente");
+        permisosCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                permisosClienteActionPerformed(evt);
+            }
+        });
+        clientesMenu.add(permisosCliente);
+
         mainMenu.add(clientesMenu);
 
         setJMenuBar(mainMenu);
@@ -58,12 +67,16 @@ public class Formulario extends javax.swing.JFrame {
             .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void clienteCreateActionPerformed(java.awt.event.ActionEvent evt) {
+        cargarInternalFrame(new ClientAdmInternalFrame());
+    }
 
-        cargarInternalFrame(new ClienteAdmInternalFrame());
+    private void permisosClienteActionPerformed(java.awt.event.ActionEvent evt) {
+        cargarInternalFrame(new ClientPermissionsInternalFrame());
     }
 
     private void cargarInternalFrame(JInternalFrame internalFrame){
@@ -73,7 +86,7 @@ public class Formulario extends javax.swing.JFrame {
         try {
             internalFrame.setMaximum(true);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
         panel.updateUI();
     }
@@ -82,4 +95,5 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JMenu clientesMenu;
     private javax.swing.JMenuBar mainMenu;
     private javax.swing.JPanel panel;
+    private javax.swing.JMenuItem permisosCliente;
 }

@@ -1,21 +1,21 @@
-package Datos;
+package Data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ComunicacionDB {
+public interface DBComunication {
     /**
      * Metodo para tarminar la comunicacion con la base de datos.
      */
-    void desconectar() throws SQLException;
+    void disconnect() throws SQLException;
 
     /**
      * Metodo para realizar Update, Insert o Delete en la base de datos.
      * @param sql Instruccion SQL a ejecutar.
      * @throws SQLException
      */
-    void consultaUID(String sql) throws SQLException;
+    void queryUID(String sql) throws SQLException;
 
     /**
      * Metodo para obtener el resultado completo de una busqueda, tanto columnas como filas.<p>
@@ -24,7 +24,7 @@ public interface ComunicacionDB {
      * @return <code>ResultSet</code> con los resultados de la busqueda segun la instruccion SQL dada.
      * @throws SQLException
      */
-    ResultSet obtenerDatos(String sql) throws SQLException;
+    ResultSet getData(String sql) throws SQLException;
 
     /**
      * Metodo para obtener los registros de una busqueda exeptuando el nombre de las columnas.
@@ -32,5 +32,5 @@ public interface ComunicacionDB {
      * @return List
      * @throws SQLException
      */
-    List<Object> obtenerRegistros(String sql) throws SQLException;
+    List<Object> getRecords(String sql) throws SQLException;
 }
